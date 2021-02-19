@@ -95,15 +95,15 @@ num_samples = raw_data.shape[0]
 diff = np.subtract(raw_data.Congruent, raw_data.Incongruent)
 diff_mean = np.mean(diff)
 diff_sdev = np.std(diff, ddof=1)
-diff_sr = diff_sdev / np.sqrt(num_samples)
+diff_stderr = diff_sdev / np.sqrt(num_samples)
 
 t = diff_mean / diff_sdev
 
 c = stats.t.ppf(0.975, num_samples-1)
 
 p = stats.t.sf(np.abs(t), num_samples-1)*2
-p_lower = diff_mean + (c * diff_sr)
-p_upper = diff_mean - (c * diff_sr)
+p_lower = diff_mean + (c * diff_stderr)
+p_upper = diff_mean - (c * diff_stderr)
 ```
 
 | Result   | Value      |
