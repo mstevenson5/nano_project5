@@ -103,6 +103,7 @@ sdev_congruent = np.std(raw_data.Congruent, ddof=1)
 sdev_incongruent = np.std(raw_data.Incongruent, ddof=1)
 
 num_samples = raw_data.shape[0]
+df = num_samples - 1
 
 diff = np.subtract(raw_data.Congruent,raw_data.Incongruent)
 mean_diff = np.mean(diff)
@@ -113,7 +114,6 @@ stderr = np.sqrt(((sdev_congruent ** 2) / num_samples) + ((sdev_incongruent ** 2
 t = mean_diff / (sdev_diff / np.sqrt(df))
 
 # alpha = 0.05
-df = num_samples - 1
 crit = stats.t.ppf(0.975, df)
 
 p = 1 - stats.t.cdf(np.abs(t), df)
