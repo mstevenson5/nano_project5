@@ -15,10 +15,14 @@ In a Stroop task, participants are presented with a list of words, with each wor
 ### What is an appropriate set of hypotheses for this task? What kind of statistical test do you expect to perform? Justify your choices.
 
 Test the existence of the Stroop Effect, where the time taken to read the incongruent word set is greater when compared to the time taken to read the congruent word set. If the mean time taken between the congruent and incongruent word sets is significantly different then we have observed the Stoop Effect. 
-* Null Hypothesis: μ_C-μ_I ≥ 0
-* Alternative Hypothesis: μ_C-μ_I < 0
+* Null Hypothesis: μ<sub>C</sub> - μ<sub>I</sub>  ≥ 0
+* Alternative Hypothesis: μ<sub>C</sub> - μ<sub>I</sub> < 0
+
+Where: μ<sub>C</sub> = Mean Congruent, μ<sub>I</sub> = Mean Incongruent
 
 The Null Hypothesis is that the mean congruent time taken is more than that of the mean incongruent time taken.
+
+As the time is recorded for each wordset per particpant a **Paired T-test** can be used. This is perferred over using Z-scores due to the limited number of records available within the dataset i.e. less than 30.
 
 ### My Test:
 * Congruent Set: 12.404s
@@ -100,12 +104,16 @@ sdev_incongruent = np.std(raw_data.Incongruent, ddof=1)
 
 num_samples = raw_data.shape[0]
 
+diff = np.subtract(raw_data.Congruent,raw_data.Incongruent)
+mean_diff = np.mean(diff)
+sdev_diff = np.std(diff, ddof=1)
+
 stderr = np.sqrt(((sdev_congruent ** 2) / num_samples) + ((sdev_incongruent ** 2) / num_samples))
 
-t = (mean_congruent - mean_incongruent) / stderr
+t = mean_diff / (sdev_diff / np.sqrt(df))
 
 # alpha = 0.05
-df = 2 * (num_samples -1)
+df = num_samples - 1
 crit = stats.t.ppf(0.975, df)
 
 p = 1 - stats.t.cdf(np.abs(t), df)
@@ -113,16 +121,18 @@ p = 1 - stats.t.cdf(np.abs(t), df)
 
 | Result   | Value      |
 |----------|------------|
-| df       | 46         |
+| df       | 23         |
 | Std Error| 1.2193     |
-| T        | ±6.5323    |
-| C        | 2.0129     |
-| P        | 2.2974e-08 |
+| T        | ±7.8518    |
+| C        | 2.0687     |
+| P        | 2.9511e-08 |
 
 
-* As the P value is less than the alpha level of 0.05 the null hypothesis is rejected and conclude with 95% confidence that it takes a longer time to read the incongruent wordset than the congruent wordset. This is consistent with my own test results, as it took me almost doulbe the time to read the incongruent wordset.
+* As the P value is less than the alpha level of 0.05 the null hypothesis is rejected and conclude with 95% confidence that it takes a longer time to read the incongruent wordset than the congruent wordset. This is consistent with my own test results, as it took me almost double the time to read the incongruent wordset.
 
 ### References
 1. https://en.wikipedia.org/wiki/Stroop_effect
 2. https://faculty.washington.edu/chudler/java/ready.html
 3. https://en.wikipedia.org/wiki/T-statistic
+4. https://www.statisticshowto.com/probability-and-statistics/hypothesis-testing/t-score-vs-z-score/
+5. https://en.wikipedia.org/wiki/Student%27s_t-test
