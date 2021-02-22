@@ -89,37 +89,40 @@ plt.ylabel('Count')
 ## Question 5:
 ### Now, perform the statistical test and report your results. What is your confidence level and your critical statistic value? Do you reject the null hypothesis or fail to reject it? Come to a conclusion in terms of the experiment task. Did the results match up with your expectations?
 
+Paired T-Test
+
 ```python
+mean_congruent = np.mean(raw_data.Congruent)
+mean_incongruent = np.mean(raw_data.Incongruent)
+
+sdev_congruent = np.std(raw_data.Congruent, ddof=1)
+sdev_incongruent = np.std(raw_data.Incongruent, ddof=1)
+
 num_samples = raw_data.shape[0]
 
-diff = np.subtract(raw_data.Congruent, raw_data.Incongruent)
-diff_mean = np.mean(diff)
-diff_sdev = np.std(diff, ddof=1)
-diff_stderr = diff_sdev / np.sqrt(num_samples)
+stderr = np.sqrt(((sdev_congruent ** 2) / num_samples) + ((sdev_incongruent ** 2) / num_samples))
 
-t = diff_mean / diff_sdev
+t = (mean_congruent - mean_incongruent) / stderr
 
-c = stats.t.ppf(0.975, num_samples-1)
+# alpha = 0.05
+df = 2 * (num_samples -1)
+crit = stats.t.ppf(0.975, df)
 
-p = stats.t.sf(np.abs(t), num_samples-1)*2
-p_lower = diff_mean + (c * diff_stderr)
-p_upper = diff_mean - (c * diff_stderr)
+p = 1 - stats.t.cdf(np.abs(t), df)
 ```
 
 | Result   | Value      |
 |----------|------------|
-| Diff     | -7.9648    |
-| T        | -1.6372    |
-| C        | 2.0687     |
-| P        | 0.1152     |
-| Lower    | -5.9106    | 
-| Upper    | -10.0190   |
+| df       | 46         |
+| Std Error| 1.2193     |
+| T        | ±6.5323    |
+| C        | 2.0129     |
+| P        | 2.2974e-08 |
 
-* As the P value is less than the significance level of 0.05 the null hypothesis has been proven invalid and conclude that the stroop effect is the cause of the significant difference in the time taken to read the congruent and incongruent wordsets.
-* The results show that with a 95% confidence that the incongruent wordset takes between 5.9106 and 10.0190 seconds longer to complete than the congruent wordset.
-* This is consistent with my own test results.
+
+* As the P value is less than the alpha level of 0.05 the null hypothesis is rejected and conclude with 95% confidence that it takes a longer time to read the incongruent wordset than the congruent wordset. This is consistent with my own test results, as it took me almost doulbe the time to read the incongruent wordset.
 
 ### References
 1. https://en.wikipedia.org/wiki/Stroop_effect
 2. https://faculty.washington.edu/chudler/java/ready.html
-3. https://en.wikipedia.org/wiki/Confidence_interval
+3. https://en.wikipedia.org/wiki/T-statistic
