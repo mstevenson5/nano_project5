@@ -129,6 +129,8 @@ p = 1 - stats.t.cdf(np.abs(t), df)
 
 
 * As the P value is less than the alpha level of 0.05 the null hypothesis is rejected and conclude with 95% confidence that it takes a longer time to read the incongruent wordset than the congruent wordset. This is consistent with my own test results, as it took me almost double the time to read the incongruent wordset.
+* This also shows that Congruent samples are easier to read due to the word and color being the same. 
+* Further tests could be done to further prove the theory, where the words are rotated or in difference cases.
 
 ### References
 1. https://en.wikipedia.org/wiki/Stroop_effect
