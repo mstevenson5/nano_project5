@@ -128,8 +128,18 @@ p = 1 - stats.t.cdf(np.abs(t), df)
 | P        | 2.9511e-08 |
 
 
-* As the P value is less than the alpha level of 0.05 the null hypothesis is rejected and conclude with 95% confidence that it takes a longer time to read the incongruent wordset than the congruent wordset. This is consistent with my own test results, as it took me almost double the time to read the incongruent wordset.
-* This also shows that Congruent samples are easier to read due to the word and color being the same. 
+* As the P value is less than the alpha level of 0.05 the null hypothesis is rejected and conclude with 95% confidence that it takes a longer time to read the incongruent wordset than the congruent wordset.
+* The data shows that Congruent samples were easier for all participants to read. This is due to the word and the color of the word matching, whereas with the incongruent samples they were different. This lead to a delay in providing the answer due to 2 different peices of infomation about the word require processing. 
+* This is consistent with my own test results, as it took me almost double the time to read the incongruent wordset and I often found that I would need to pause before providing my answer with the incongruent dataset.
+* Several theroies exist as to why incongruent dataset is more difficult to read:
+> * Selective Attention Theory
+> 
+> * Automaticity Theory
+> 
+> * Speed of Processing Theory
+> 
+> * Parallel Distributed Processing
+> 
 * Further tests could be done to further prove the theory, where the words are rotated or in difference cases.
 
 ### References
@@ -138,3 +148,4 @@ p = 1 - stats.t.cdf(np.abs(t), df)
 3. https://en.wikipedia.org/wiki/T-statistic
 4. https://www.statisticshowto.com/probability-and-statistics/hypothesis-testing/t-score-vs-z-score/
 5. https://en.wikipedia.org/wiki/Student%27s_t-test
+6. https://lesley.edu/article/what-the-stroop-effect-reveals-about-our-minds#:~:text=Stroop%20found%20that%20subjects%20took,printed%20word%20in%20experiment%20one.
